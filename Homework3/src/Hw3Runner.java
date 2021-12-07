@@ -25,5 +25,9 @@ public class Hw3Runner {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		String poem1 = fileReader.readPoem(path1);
+		String[] words1 = poem1.replaceAll("[^a-zA-Z ]", "").toLowerCase().split("\\s+");
+		LinearProbingHashST<String, Term> hash1 = new LinearProbingHashST<String, Term>();
 	}
 }
