@@ -2,13 +2,27 @@
 public class Term {
 	public String word;
 	public String document;
-	public int word_frequency;
-	public double td_idf;
+	public int wordFrequency;
+	public double tfidf;
 	
-	public Term (String word, String document, int word_frequency, double td_idf) {
+	public Term (String word, String document, int wordFrequency, double tfidf) {
 		this.word = word;
 		this.document = document;
-		this.word_frequency = word_frequency;
-		this.td_idf = td_idf;
+		this.wordFrequency = wordFrequency;
+		this.tfidf = tfidf;
+	}
+	
+	public int getFrequency () {
+		return this.wordFrequency;
+	}
+	public String getDocument() {
+		return this.document;
+	}
+	public double getTFIDF() {
+		return this.tfidf;
+	}
+	
+	public void setTFIDF(double temp) {
+		this.tfidf = temp;
 	}
 }

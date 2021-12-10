@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.Scanner;
 
-public class readFile {
+public class ReadFile {
 
 	public String readPoem(String path) {
 		StringBuilder poem = new StringBuilder();

@@ -1,6 +1,8 @@
 import java.util.Iterator;
 
-public class LinearProbingHashST<Key, Value> implements Iterable<Value>{
+import edu.princeton.cs.algs4.Queue;
+
+public class LinearProbingHashST<Key, Value> {
 	private int N;
 	private int M = 16;
 	private Key[] keys;
@@ -32,9 +34,9 @@ public class LinearProbingHashST<Key, Value> implements Iterable<Value>{
 		M = t.M;
 	}
 
-	public void put(Key key, Value val) {
+	public void put(Key key, Value val) {       
 		if (N >= M / 2)
-			resize(2 * M); 
+			resize(2 * M);
 		int i;
 		for (i = hash(key); keys[i] != null; i = (i + 1) % M)
 			if (keys[i].equals(key)) {
@@ -53,52 +55,50 @@ public class LinearProbingHashST<Key, Value> implements Iterable<Value>{
 		return null;
 	}
 
-	public void delete(Key key)	{
-		if (!contains(key)) return; 
+	public void delete(Key key) {
+		if (!contains(key))
+			return;
 		int i = hash(key);
 		while (!key.equals(keys[i]))
-	        i = (i + 1) % M;
-		
-	     keys[i] = null;
-	     vals[i] = null;
-	     i = (i + 1) % M;
-	     while (keys[i] != null)
-	     {
-	        Key   keyToRedo = keys[i];
-	        Value valToRedo = vals[i];
-	        keys[i] = null;
-	        vals[i] = null;
-	        N--;
-	        put(keyToRedo, valToRedo); 
-	        i = (i + 1) % M;
-	     }	
-	     N--;
-	     if (N > 0 & N == M/8) resize(M/2);
+			i = (i + 1) % M;
+
+		keys[i] = null;
+		vals[i] = null;
+		i = (i + 1) % M;
+		while (keys[i] != null) {
+			Key keyToRedo = keys[i];
+			Value valToRedo = vals[i];
+			keys[i] = null;
+			vals[i] = null;
+			N--;
+			put(keyToRedo, valToRedo);
+			i = (i + 1) % M;
+		}
+		N--;
+		if (N > 0 & N == M / 8)
+			resize(M / 2);
 	}
 
 	private boolean contains(Key key) {
-		if(get(key) != null)
+		if (get(key) != null)
 			return true;
 		else
 			return false;
 	}
-	
-	public Iterator<Value> iterator() {
-		return new ArrayIterator();
+
+	public int hashTablelength() {
+		return N;
 	}
 
-	private class ArrayIterator implements Iterator<Value> { 
-		private int i = 0;
-	 
-		public boolean hasNext() {
-		   return i < M;
+	public Iterable<Key> keys() {
+		Queue<Key> queue = new Queue<Key>();
+		for (int i = 0; i < M; i++) {
+			if (keys[i] != null)
+				//System.out.println(keys[i]);
+				queue.enqueue(keys[i]);
 		}
-	 
-		public Value next() {
-		   return vals[i++];
-		}
-	 
-		public void remove() {
-		}
-	 }
+
+		return queue;
+	}
+
 }
